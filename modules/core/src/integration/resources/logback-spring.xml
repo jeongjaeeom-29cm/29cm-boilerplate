@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <springProfile name="test">
+        <include resource="logback/plain-console-appender.xml"/>
+        <logger name="kr.co._29cm" level="DEBUG"/>
+        <logger name="software.amazon.jdbc" level="DEBUG" />
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+</configuration>

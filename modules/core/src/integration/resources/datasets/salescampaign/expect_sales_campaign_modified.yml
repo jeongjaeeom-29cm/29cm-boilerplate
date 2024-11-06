@@ -1,0 +1,13 @@
+sales_campaign:
+  - id: 1
+    name: "수요입점회 W26"
+    status: "READY"
+    start_at: "2024-10-08 00:00:00"
+    end_at: "2024-10-10 00:00:00"
+    enabled: "Y"
+
+sales_campaign_history:
+  - id: 1
+    sales_campaign_id: 1
+    description: "세일즈캠페인 수정"
+    changes: "{\"name\": {\"new\": \"수요입점회 W26\", \"old\": \"수요입점회 W25\"}, \"period\": {\"new\": {\"endAt\": \"2024-10-10T09:00:00+09:00\", \"startAt\": \"2024-10-08T09:00:00+09:00\"}, \"old\": {\"endAt\": \"2024-10-09T09:00:00+09:00\", \"startAt\": \"2024-10-08T09:00:00+09:00\"}}}"

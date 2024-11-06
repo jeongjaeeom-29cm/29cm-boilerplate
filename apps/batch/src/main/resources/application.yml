@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: boilerplate-batch
+  config:
+    import:
+      - 'classpath:boilerplate-service.yml'
+      - 'classpath:boilerplate-http.yml'
+      - 'classpath:boilerplate-message.yml'
+      - 'classpath:boilerplate-persistence.yml'
+  batch:
+    job:
+      name: ${job.name:NONE}
+    jdbc:
+      initialize-schema: never
+  main:
+    web-application-type: none
+
+---
+spring.config.activate.on-profile: local

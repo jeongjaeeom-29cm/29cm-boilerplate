@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: test
+  config:
+    import:
+      - 'classpath:boilerplate-service.yml'
+      - 'classpath:boilerplate-http.yml'
+      - 'classpath:boilerplate-message.yml'
+      - 'classpath:boilerplate-persistence.yml'
+
+---
+spring.config.activate.on-profile: test

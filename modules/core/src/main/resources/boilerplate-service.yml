@@ -1,0 +1,5 @@
+spring:
+  jackson:
+    deserialization:
+      adjust-dates-to-context-time-zone: false
+    time-zone: Asia/Seoul

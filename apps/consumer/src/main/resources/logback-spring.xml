@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <springProfile name="local,local-dev,test">
+        <include resource="logback/plain-console-appender.xml"/>
+        <logger name="kr.co._29cm" level="DEBUG"/>
+        <logger name="software.amazon.jdbc" level="DEBUG"/>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="dev">
+        <include resource="logback/json-console-appender.xml"/>
+        <logger name="kr.co._29cm" level="DEBUG"/>
+        <root level="INFO">
+            <appender-ref ref="JSON-CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="prd">
+        <include resource="logback/json-console-appender.xml"/>
+        <logger name="kr.co._29cm" level="INFO"/>
+        <root level="INFO">
+            <appender-ref ref="JSON-CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="qa">
+        <include resource="logback/json-console-appender.xml"/>
+        <logger name="kr.co._29cm" level="INFO"/>
+        <root level="INFO">
+            <appender-ref ref="JSON-CONSOLE"/>
+        </root>
+    </springProfile>
+</configuration>

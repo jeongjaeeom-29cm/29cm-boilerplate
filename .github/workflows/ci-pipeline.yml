@@ -1,0 +1,47 @@
+name: (Pipeline) CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create release
+        id: create-release
+        uses: release-drafter/release-drafter@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          prerelease: ${{ github.ref != 'refs/heads/main' }}
+          prerelease-identifier: pre
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'corretto'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 'wrapper'
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+      - name: Build with Gradle
+        run: |
+          ./gradlew testAll jacocoTestReport -Pversion="${{ steps.create-release.outputs.tag_name }}" --parallel --stacktrace
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-reports
+          path: '**/build/reports/**/*'
+          retention-days: 10

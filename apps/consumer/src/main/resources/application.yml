@@ -1,0 +1,90 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: boilerplate-consumer
+  config:
+    import:
+      - 'classpath:boilerplate-service.yml'
+      - 'classpath:boilerplate-http.yml'
+      - 'classpath:boilerplate-message.yml'
+      - 'classpath:boilerplate-persistence.yml'
+  kafka:
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      auto-offset-reset: latest
+      enable-auto-commit: false
+    listener:
+      ack-mode: record
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      group:
+        liveness:
+          show-components: always
+          include:
+            - livenessState
+        readiness:
+          show-components: always
+    prometheus:
+      enabled: true
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+
+
+---
+spring.config.activate.on-profile: local
+
+spring:
+  kafka:
+    listener:
+      concurrency: 2
+    bootstrap-servers: localhost:9094
+consumer:
+  sales-campaign-event:
+    topic: "sales-campaign.sales-campaign-event-local"
+
+
+---
+spring.config.activate.on-profile: local-dev,dev
+
+spring:
+  kafka:
+    listener:
+      concurrency: 2
+    bootstrap-servers: localhost:9094
+consumer:
+  sales-campaign-event:
+    topic: "sales-campaign.sales-campaign-event-dev"
+
+
+---
+spring.config.activate.on-profile: qa
+
+spring:
+  kafka:
+    listener:
+      concurrency: 2
+    bootstrap-servers: localhost:9094
+consumer:
+  sales-campaign-event:
+    topic: "sales-campaign.sales-campaign-event-qa"
+
+
+---
+spring.config.activate.on-profile: prd
+
+spring:
+  kafka:
+    listener:
+      concurrency: 5
+    bootstrap-servers: localhost:9094
+consumer:
+  sales-campaign-event:
+    topic: "sales-campaign.sales-campaign-event-prd"

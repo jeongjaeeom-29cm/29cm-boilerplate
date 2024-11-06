@@ -1,0 +1,27 @@
+@startuml
+
+title 모듈 구조
+left to right direction
+
+package "apps" {
+    rectangle "internal-api" as InternalApi <<$archimate/application-service>> #Application
+    rectangle "consumer" as Consumer <<$archimate/application-service>> #Application
+    rectangle "batch" as Batch <<$archimate/application-service>> #Application
+}
+
+package "modules" {
+    rectangle "core" as Core <<$archimate/business-service>> #Business
+    rectangle "contract" as Contract <<$archimate/business-contract>> #Business
+}
+
+HTTP -d- InternalApi
+MESSAGE -d- Consumer
+TRIGGER -d- Batch
+
+InternalApi -d-> Core
+Consumer -d-> Core
+Batch -d-> Core
+
+Core -[dashed]d-> Contract
+
+@enduml

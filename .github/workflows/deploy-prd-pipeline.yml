@@ -1,0 +1,79 @@
+name: (Pipeline) Deploy PRD
+on:
+  workflow_dispatch:
+    inputs:
+      deployment-internal-api:
+        description: 'API 배포 (Internal)'
+        type: boolean
+        default: false
+      deployment-consumer:
+        description: 'Consumer 배포'
+        type: boolean
+        default: false
+  release:
+    types: [published]
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  prepare:
+    name: 준비
+    runs-on: ubuntu-latest
+    outputs:
+      deployment-version: ${{ steps.set-deployment-version.outputs.deployment-version }}
+    steps:
+      - name: Get deployment version
+        run: echo "DEPLOYMENT_VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+        if: ${{ github.event_name == 'release' }}
+      - name: Create deployment version (when version empty)
+        run: echo "DEPLOYMENT_VERSION=snapshot-${{ github.sha }}" >> $GITHUB_ENV
+        if: ${{ env.DEPLOYMENT_VERSION == '' }}
+      - name: Set deployment version
+        id: set-deployment-version
+        run: echo "deployment-version=${{ env.DEPLOYMENT_VERSION }}" >> $GITHUB_OUTPUT
+  build-internal-api:
+    name: API 빌드 (Internal)
+    if: ${{ github.event.inputs.deployment-internal-api != 'false' }}
+    uses: ./.github/workflows/build-jib.yml
+    needs:
+      - prepare
+    secrets: inherit
+    with:
+      module: 'internal-api'
+      container-image: 947377436730.dkr.ecr.ap-northeast-2.amazonaws.com/prd-boilerplate-internal-api
+      deployment-version: ${{ needs.prepare.outputs.deployment-version }}
+  build-consumer:
+    name: Consumer 빌드
+    if: ${{ github.event.inputs.deployment-consumer != 'false' }}
+    uses: ./.github/workflows/build-jib.yml
+    needs:
+      - prepare
+    secrets: inherit
+    with:
+      module: 'consumer'
+      container-image: 947377436730.dkr.ecr.ap-northeast-2.amazonaws.com/prd-boilerplate-consumer
+      deployment-version: ${{ needs.prepare.outputs.deployment-version }}
+  deployment-internal-api:
+    name: API 배포 (Internal)
+    if: ${{ github.event.inputs.deployment-internal-api != 'false' }}
+    uses: ./.github/workflows/deployment-argocd.yml
+    needs:
+      - prepare
+      - build-internal-api
+    secrets: inherit
+    with:
+      environment: prd
+      container-image: 947377436730.dkr.ecr.ap-northeast-2.amazonaws.com/prd-boilerplate-internal-api
+      deployment-version: ${{ needs.prepare.outputs.deployment-version }}
+  deployment-consumer:
+    name: Consumer 배포
+    if: ${{ github.event.inputs.deployment-consumer != 'false' }}
+    uses: ./.github/workflows/deployment-argocd.yml
+    needs:
+      - prepare
+      - build-consumer
+    secrets: inherit
+    with:
+      environment: prd
+      container-image: 947377436730.dkr.ecr.ap-northeast-2.amazonaws.com/prd-boilerplate-consumer
+      deployment-version: ${{ needs.prepare.outputs.deployment-version }}

@@ -1,0 +1,5 @@
+sales_campaign:
+  - id: 1
+    name: 수요입점회 W25
+    status: READY
+    enabled: Y

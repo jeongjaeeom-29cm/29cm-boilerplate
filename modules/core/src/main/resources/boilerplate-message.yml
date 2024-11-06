@@ -1,0 +1,60 @@
+spring:
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      retries: 3
+      properties:
+        spring.json.use.type.headers: false
+
+
+---
+spring.config.activate.on-profile: test
+
+publisher:
+  boilerplate-event:
+    topic: "boilerplate.boilerplate-event-test"
+
+---
+spring.config.activate.on-profile: local
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9094
+publisher:
+  boilerplate-event:
+    topic: "boilerplate.boilerplate-event-local"
+
+---
+spring.config.activate.on-profile: local-dev,dev
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+publisher:
+  boilerplate-event:
+    topic: "boilerplate.boilerplate-event-dev"
+
+---
+spring.config.activate.on-profile: qa
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+publisher:
+  boilerplate-event:
+    topic: "boilerplate.boilerplate-event-qa"
+
+---
+spring.config.activate.on-profile: prd
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+publisher:
+  boilerplate-event:
+    topic: "boilerplate.boilerplate-event-test"

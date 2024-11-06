@@ -1,0 +1,29 @@
+name: Deployment (ArgoCD)
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment'
+        type: string
+        required: true
+      container-image:
+        description: 'Container Image'
+        type: string
+        required: true
+      deployment-version:
+        description: 'Version'
+        type: string
+        required: true
+permissions:
+  id-token: write 
+  contents: read
+env:
+  AWS_REGION: ap-northeast-2
+jobs:
+  deployment-argocd:
+    name: ARGOCD 배포
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4

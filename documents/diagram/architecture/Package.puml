@@ -1,0 +1,56 @@
+@startuml
+
+title 패키지 구조
+
+package "entity" {
+    class SalesCampaign
+    class ProductSet
+}
+
+package "usecase" {
+    interface CreateSalesCampaignUseCase
+}
+
+package "repository" {
+    interface SalesCampaignRepository
+    interface ProductSetRepository
+}
+
+package "message" {
+    class SalesCampaignEventMessage
+    interface SalesCampaignEventMessagePublisher
+}
+
+package "service" {
+    class SalesCampaignCreator
+    class ProductSetCreator
+}
+
+package "facade" {
+    class CreateSalesCampaignFacade
+}
+
+package "controller" {
+    class CreateSalesCampaignController
+}
+
+SalesCampaignRepository -[dashed]-> SalesCampaign
+ProductSetRepository -[dashed]-> ProductSet
+SalesCampaignEventMessagePublisher -[dashed]-> SalesCampaignEventMessage
+
+SalesCampaignCreator -[dashed]-> SalesCampaign
+SalesCampaignCreator -[dashed]-> SalesCampaignRepository
+SalesCampaignCreator -[dashed]-> SalesCampaignEventMessage
+SalesCampaignCreator -[dashed]-> SalesCampaignEventMessagePublisher
+
+ProductSetCreator -[dashed]-> ProductSet
+ProductSetCreator -[dashed]-> ProductSetRepository
+
+CreateSalesCampaignFacade -[dashed]-> SalesCampaignCreator
+CreateSalesCampaignFacade -[dashed]-> ProductSetCreator
+
+CreateSalesCampaignController -[dashed]-> CreateSalesCampaignUseCase
+
+CreateSalesCampaignUseCase <|-- CreateSalesCampaignFacade
+
+@enduml

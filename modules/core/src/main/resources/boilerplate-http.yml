@@ -1,0 +1,61 @@
+spring:
+  cloud:
+    discovery:
+      client:
+        composite-indicator:
+          enabled: false
+    openfeign:
+      client:
+        config:
+          tag-api:
+            connectTimeout: 1000
+            readTimeout: 5000
+            loggerLevel: basic
+
+
+---
+spring.config.activate.on-profile: local,test
+
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          tag-api:
+            url: http://localhost:10010
+
+
+---
+spring.config.activate.on-profile: local-dev,dev
+
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          tag-api:
+            url: http://tag-api-dev.internal
+
+
+---
+spring.config.activate.on-profile: qa
+
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          tag-api:
+            url: http://tag-api.internal
+
+
+---
+spring.config.activate.on-profile: prd
+
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          tag-api:
+            url: http://tag-api.internal

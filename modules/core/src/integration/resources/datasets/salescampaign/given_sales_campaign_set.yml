@@ -1,0 +1,55 @@
+sales_campaign:
+  - id: 1
+    name: "수요입점회 W25"
+    status: "COMPLETED"
+    start_at: "2024-06-19 00:00:00"
+    end_at: "2024-06-20 00:00:00"
+    enabled: "Y"
+  - id: 2
+    name: "수요입점회 W26"
+    status: "COMPLETED"
+    start_at: "2024-06-26 00:00:00"
+    end_at: "2024-06-26 00:00:00"
+    enabled: "Y"
+  - id: 3
+    name: "수요입점회 W27"
+    status: "COMPLETED"
+    start_at: "2024-07-03 00:00:00"
+    end_at: "2024-07-04 00:00:00"
+    enabled: "Y"
+  - id: 4
+    name: "수요입점회 W28"
+    status: "COMPLETED"
+    start_at: "2024-07-10 00:00:00"
+    end_at: "2024-07-11 00:00:00"
+    enabled: "Y"
+  - id: 5
+    name: "수요입점회 W29"
+    status: "COMPLETED"
+    start_at: "2024-07-17 00:00:00"
+    end_at: "2024-07-18 00:00:00"
+    enabled: "Y"
+  - id: 6
+    name: "수요입점회 W30"
+    status: "IN_PROGRESS"
+    start_at: "2024-07-24 00:00:00"
+    end_at: "2024-07-25 00:00:00"
+    enabled: "Y"
+  - id: 7
+    name: "수요입점회 W31"
+    status: "READY"
+    start_at: "2024-07-31 00:00:00"
+    end_at: "2024-08-01 00:00:00"
+    enabled: "Y"
+  - id: 8
+    name: "수요입점회 W32"
+    status: "READY"
+    start_at: "2024-08-07 00:00:00"
+    end_at: "2024-08-08 00:00:00"
+    enabled: "Y"
+  - id: 9
+    name: "수요입점회 W33"
+    status: "READY"
+    start_at: "2024-08-14 00:00:00"
+    end_at: "2024-08-15 00:00:00"
+    enabled: "Y"

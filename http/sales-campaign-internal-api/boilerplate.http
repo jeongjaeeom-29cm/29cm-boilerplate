@@ -1,0 +1,48 @@
+### 세일즈캠페인 페이지
+GET {{host}}/internal/v4/sales-campaigns:page?page=1
+Content-Type: application/json
+
+
+### 세일즈캠페인 단건 조회
+GET {{host}}/internal/v4/sales-campaigns/1
+Content-Type: application/json
+
+
+### 세일즈캠페인 생성
+POST {{host}}/internal/v4/sales-campaigns:create
+Content-Type: application/json
+
+{
+  "name": "수요입점회 W35",
+  "period": {
+    "startAt": "2024-10-10T00:00:00+09:00",
+    "endAt": "2024-10-12T00:00:00+09:00"
+  }
+}
+
+### 세일즈캠페인 수정
+POST {{host}}/internal/v4/sales-campaigns/1:modify
+Content-Type: application/json
+
+{
+  "name": "수요입점회 W37",
+  "period": {
+    "startAt": "2024-10-10T00:00:00+09:00",
+    "endAt": "2024-10-12T00:00:00+09:00"
+  }
+}
+
+
+### 세일즈캠페인 활성화
+POST {{host}}/internal/v4/sales-campaigns/1:enable
+Content-Type: application/json
+
+
+### 세일즈캠페인 비활성화
+POST {{host}}/internal/v4/sales-campaigns/1:disable
+Content-Type: application/json
+
+
+### 세일즈캠페인 삭제
+POST {{host}}/internal/v4/sales-campaigns/1:delete
+Content-Type: application/json

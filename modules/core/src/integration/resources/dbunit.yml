@@ -1,0 +1,7 @@
+cacheConnection: true
+cacheTableNames: true
+leakHunter: false
+caseInsensitiveStrategy: LOWERCASE
+properties:
+  allowEmptyFields: true
+  caseSensitiveTableNames: false

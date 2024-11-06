@@ -1,0 +1,66 @@
+spring:
+  datasource:
+    name: SalesCampaignDataSource
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 10000
+      max-lifetime: 60000
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.timezone.default_storage: NORMALIZE_UTC
+      hibernate.jdbc.time_zone: Asia/Seoul
+  flyway:
+    enabled: false
+    encoding: UTF-8
+    baseline-on-migrate: true
+    baseline-version: 0
+
+
+---
+spring.config.activate.on-profile: local,test
+
+spring:
+  datasource:
+    url: jdbc:aws-wrapper:mysql://localhost:3306/boilerplate
+    username: application
+    password: application
+    driver-class-name: software.amazon.jdbc.Driver
+    hikari:
+      data-source-properties:
+        wrapperDialect: mysql
+        wrapperPlugins: logQuery
+        enhancedLogQueryEnabled: true
+  flyway:
+    enabled: true
+
+
+---
+spring.config.activate.on-profile: local-dev,dev
+
+
+---
+spring.config.activate.on-profile: qa
+
+
+---
+spring.config.activate.on-profile: prd
+
+spring:
+  datasource:
+    url: jdbc:aws-wrapper:mysql://content-writer.db.prd.in.29cm.io:3306/boilerplate
+    username: application
+    password: application
+    driver-class-name: software.amazon.jdbc.Driver
+    hikari:
+      data-source-properties:
+        wrapperDialect: aurora-mysql
+        wrapperPlugins: auroraConnectionTracker,failover,efm2
+        clusterInstanceHostPattern: ?.ctmw8zwgnsc3.ap-northeast-2.rds.amazonaws.com
+      exception-override-class-name: software.amazon.jdbc.util.HikariCPSQLException
+

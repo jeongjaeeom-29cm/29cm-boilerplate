@@ -1,0 +1,7 @@
+sales_campaign:
+  - id: 1
+    name: "수요입점회 W25"
+    status: "READY"
+    start_at: "2024-10-08 00:00:00"
+    end_at: "2024-10-09 00:00:00"
+    enabled: "Y"
